@@ -16,7 +16,7 @@
 <body>
     <header>
         <div>
-            <button><img src="/assets/Arrow.svg" alt=""></button>
+            <button onclick="location.href='index.html'"><img src="/assets/Arrow.svg" alt=""></button>
             <h1>Article</h1>
         </div>
     </header>
@@ -225,13 +225,30 @@
                 til ditt repository):</p>
             <pre><code>git clone &lt;URL-til-prosjektet&gt;</code></pre>
 
-            <h4>Kontroller innholdet</h4>
+            <h4>Kontroller innholdet og gi Nginx tilgang</h4>
             <p>Sjekk at prosjektmappen er klonet ved å kjøre:</p>
-            <pre><code>ls</code></pre>
-            <p>Hvis innholdet ligger i en undermappe, flytt filene ut i rotkatalogen til nettsiden:</p>
-            <pre><code>mv /var/www/brukernavn.ikt-fag.no/mappenavnet/{,} /var/www/brukernavn.ikt-fag.no/</code></pre>
+            <pre><code>ls
+            </code></pre>
+            
+            <p>Hvis innholdet ligger i en undermappe (for eksempel <code>mappenavnet</code>), flytt filene ut i rotkatalogen til nettsiden:</p>
+            <pre><code>mv /var/www/brukernavn.ikt-fag.no/mappenavnet/{,} /var/www/brukernavn.ikt-fag.no/
+            </code></pre>
+            
             <p>Slett deretter den tomme mappen:</p>
-            <pre><code>rmdir /var/www/brukernavn.ikt-fag.no/mappenavnet</code></pre>
+            <pre><code>rmdir /var/www/brukernavn.ikt-fag.no/mappenavnet
+            </code></pre>
+            
+            <h4>Gi Nginx riktige tillatelser</h4>
+            <p>Nginx kjører som oftest under brukeren <code>www-data</code> på Ubuntu/Debian. Gi denne brukeren eierskap til katalogen, slik at Nginx kan lese og servere filene:</p>
+            <pre><code>sudo chown -R www-data:www-data /var/www/brukernavn.ikt-fag.no
+            sudo chmod -R 755 /var/www/brukernavn.ikt-fag.no
+            </code></pre>
+            
+            <p><strong>Forklaring:</strong></p>
+            <ul>
+                <li><code>chown -R www-data:www-data /var/www/brukernavn.ikt-fag.no</code> endrer eierskap av alle filer og mapper under <code>/var/www/brukernavn.ikt-fag.no</code> til <code>www-data</code>-brukeren og -gruppen.</li>
+                <li><code>chmod -R 755 /var/www/brukernavn.ikt-fag.no</code> gir eieren (www-data) full tilgang, mens gruppe og andre brukere får lese- og kjørerettigheter, noe som er tilstrekkelig for at Nginx skal kunne servere filene.</li>
+            </ul>
 
             <h3>Last inn Nginx på nytt</h3>
             <p>For at endringene i konfigurasjonen skal tre i kraft, må du laste inn Nginx på nytt:</p>
