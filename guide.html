@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubuntu Guide</title>
+    <link rel="stylesheet" href="guide.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <button><img src="/assets/Arrow.svg" alt=""></button>
+            <h1>Article</h1>
+        </div>
+    </header>
+    <main>
+        <div class="articleHeader">
+            <img src="/assets/background.png" alt="">
+            <div class="articleHeaderContent">
+                <h1>UBUNTU GUIDE</h1>
+                <div class="profileCard">
+                    <img src="/assets/nichlas.jpeg" alt="Nichlas Loe-Dahl" />
+                    <div class="profileCardName">
+                        <p class="fullName">Nichlas Loe-Dahl</p>
+                        <p class="userName">@nichld</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <article>
+            <h2>Del 1: Oppretting av en Virtuell Maskin i vCenter</h2>
+            <p>Dette er første del av en større guide der vi steg for steg skal sette opp en Linux-basert webserver. I
+                denne delen oppretter vi selve den virtuelle maskinen i vCenter. I senere deler vil vi fortsette med
+                installasjon av Ubuntu, oppsett av webserver, og publisering av nettsiden.</p>
+
+            <img src="/assets/image1.png" alt="Skjermbilde av vCenter-grensesnittet">
+
+            <h3>Forberedelser:</h3>
+            <p>Forsikre deg om at du er tilkoblet <strong>Global Protect VPN</strong>. Gå deretter inn på vCenter ved å
+                navigere til: <a href="http://10.10.1.20/">http://10.10.1.20/</a> i nettleseren.</p>
+
+            <h3>Oppretting av VM:</h3>
+            <p>Når du er logget inn i vCenter, klikk på <strong>"New Virtual Machine"</strong> for å starte
+                opprettelsesveiviseren. Du vil nå se en prosess bestående av flere trinn der du skal tildele ressurser
+                og konfigurere den virtuelle maskinen. Følg trinnene nedenfor:</p>
+
+            <ol>
+                <li>Velg <strong>"Create new virtual machine"</strong>.</li>
+                <li>Gi maskinen et beskrivende navn, for eksempel <strong>"Ubuntu-Webserver"</strong>.</li>
+                <li>Klikk <strong>"Next"</strong>.</li>
+                <li>Velg riktig ressursklynge (f.eks. <strong>"ikt-fag"</strong>) og klikk <strong>"Next"</strong>.</li>
+                <li>Klikk <strong>"Next"</strong> igjen.</li>
+                <li>Under <strong>Guest OS family</strong>, velg <strong>Linux</strong>.</li>
+                <li>Under <strong>Guest OS version</strong>, velg <strong>Ubuntu Linux 64-bit</strong>.</li>
+            </ol>
+
+            <p>Nå skal du tilpasse det virtuelle maskinvareoppsettet:</p>
+            <ul>
+                <li><strong>CPU:</strong> 4 kjerner</li>
+                <li><strong>Memory:</strong> 4 GB</li>
+                <li><strong>Harddisk:</strong> 25 GB (Husk å sette <strong>Disk Provisioning</strong> til <strong>Thin
+                        Provisioning</strong>)</li>
+                <li><strong>CD/DVD Drive:</strong> Velg <strong>Client Device</strong>, hent ISO-filen fra Content
+                    Library (f.eks. ubuntu-22.04.1-live-server-amd64), og huk av for <strong>"Connect at power
+                        on"</strong>.</li>
+            </ul>
+
+            <p>Se over innstillingene og klikk <strong>"Finish"</strong> for å fullføre opprettelsen.</p>
+
+            <aside>
+                Når du er ferdig med disse trinnene, har du opprettet en virtuell maskin som er klar for videre arbeid i
+                de neste delene av guiden. Neste steg vil være å starte opp VM-en, installere Ubuntu Server, sette opp
+                webserver og til slutt publisere nettsiden.
+            </aside>
+            <h2>Del 2: Installering av Ubuntu Server på den Virtuelle Maskinen</h2>
+            <img src="/assets/image1.png" alt="">
+            <p>I denne delen av guiden skal du installere Ubuntu Server på VM-en du nettopp opprettet i vCenter. Etter
+                at denne prosessen er fullført, vil du ha en fungerende Ubuntu-installasjon klar for videre oppsett av
+                webserver og publisering av nettsiden.</p>
+
+            <h3>Fremgangsmåte:</h3>
+
+            <h4>1. Start Web Console</h4>
+            <p>I vCenter, gå inn på den nyopprettede VM-en din og klikk på <strong>"Launch Web Console"</strong>. Du vil
+                nå se en svart skjerm hvor det står <strong>"Try or Install Ubuntu"</strong>.</p>
+
+            <h4>2. Start installasjon</h4>
+            <p>Trykk <strong>Enter</strong> for å gå videre med installasjonen.</p>
+
+            <h4>3. Språkvalg</h4>
+            <p>Velg gjerne <strong>Engelsk</strong> som språk. Å bruke engelsk kan gjøre det enklere å finne hjelp og
+                løse problemer, siden flesteparten av guider og løsninger på nett er på engelsk.</p>
+
+            <h4>4. Tastaturoppsett</h4>
+            <p>Velg tastaturoppsettet som passer for ditt oppsett (f.eks. Norwegian hvis du har norsk tastatur).</p>
+
+            <h4>5. Type of Install</h4>
+            <p>Når du kommer til valget om type installasjon (Try Ubuntu eller Install Ubuntu), trykk bare
+                <strong>Enter</strong> for å starte en vanlig installasjon.</p>
+
+            <h4>6. Nettverksoppsett</h4>
+            <p>Her må du gjøre en manuell nettverkskonfigurasjon.</p>
+            <ul>
+                <li>Velg grensesnittet <strong>ens33</strong> og trykk på "Edit IPv4".</li>
+                <li>Endre konfigurasjonen til <strong>Manual</strong> og sett følgende:
+                    <ul>
+                        <li><strong>Subnet:</strong> 10.12.7.0/24</li>
+                        <li><strong>Address:</strong> 10.12.7.220</li>
+                        <li><strong>Gateway:</strong> 10.12.7.1</li>
+                        <li><strong>Nameservers:</strong> 10.10.1.30, 1.1.1.1, 8.8.8.8</li>
+                        <li><strong>Search domains:</strong> ikt-fag.no</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Når nettverket er satt opp, trykk <strong>Done</strong>.</p>
+            <p>Du får nå valget mellom <strong>"Continue without updating"</strong> eller <strong>"Update to new
+                    installer"</strong>.</p>
+            <p>Velg gjerne <strong>"Update to new installer"</strong> for å sikre at du har den nyeste versjonen.</p>
+
+            <h4>7. Lagringsoppsett (Storage Configuration)</h4>
+            <p>Ved <strong>Guided storage configuration</strong> kan du bare trykke <strong>Done</strong>.</p>
+            <p>Når du får advarsel om å overskrive disk, trykker du <strong>Continue</strong> for å bekrefte.</p>
+
+            <h4>8. Profile Configuration</h4>
+            <p>Her skal du opprette en bruker.</p>
+            <p>Skriv inn brukernavn, maskinnavn og passord.</p>
+            <aside>
+                Husk brukernavnet og passordet godt, da du trenger det både for innlogging og SSH-tilkobling senere.
+            </aside>
+
+            <h4>9. Ubuntu Pro</h4>
+            <p>Etter profilkonfigurasjonen kommer en side om <strong>Ubuntu Pro</strong>. Trykk
+                <strong>Continue</strong>.</p>
+
+            <h4>10. OpenSSH Server</h4>
+            <p>Du får spørsmål om å installere OpenSSH Server. Velg <strong>Yes</strong>, da dette lar deg logge inn via
+                SSH senere. Trykk deretter <strong>Done</strong>.</p>
+
+            <h4>11. Featured Server Snaps</h4>
+            <p>På siden med utvalgte snaps kan du bare trykke <strong>Done</strong> uten å velge noe.</p>
+
+            <h4>12. Start installasjonen</h4>
+            <p>Når du trykker <strong>Done</strong> her, vil Ubuntu begynne å installere seg på VM-en.</p>
+
+            <h3>Når installasjonen er fullført</h3>
+            <p>Etter noen minutter vil installasjonen fullføres, og du kan starte opp systemet. Du har nå et fungerende
+                Ubuntu Server-operativsystem klart på din VM. I neste del av guiden vil du lære å oppdatere systemet,
+                installere webserver (NGINX), og sette opp nettsiden.</p>
+
+            <h2>Del 3: Installasjon av Ubuntu Webserver (Nginx) og Publisering av Nettsiden</h2>
+            <img src="/assets/image3.png" alt="">
+            <p><em>I denne delen av guiden skal vi installere Nginx som webserver på den nyoppsatte Ubuntu-serveren.
+                    Deretter skal vi konfigurere en nettside og hente inn innhold fra et Git-repository. Til slutt vil
+                    vi laste inn Nginx på nytt slik at endringene tas i bruk.</em></p>
+
+            <h3>Oppdater systemet</h3>
+            <p>Først bør vi sørge for at systemet er oppdatert. Kjør følgende kommando for å oppdatere pakkelisten og
+                oppgradere allerede installerte pakker:</p>
+            <pre><code>sudo apt update && sudo apt upgrade -y</code></pre>
+            <p>Du vil bli bedt om å oppgi passord når du bruker <code>sudo</code>, da kommandoen kjøres med
+                administrative rettigheter.</p>
+
+            <h3>Installer Nginx</h3>
+            <p>Installer Nginx, en populær og rask webserver, ved å bruke:</p>
+            <pre><code>sudo apt install nginx -y</code></pre>
+
+            <h3>Kontroller statusen på Nginx</h3>
+            <p>For å sjekke at Nginx kjører som den skal:</p>
+            <pre><code>sudo systemctl status nginx</code></pre>
+            <p>Hvis det står <code>active (running)</code>, betyr det at Nginx fungerer fint. Hvis den ikke kjører, kan
+                du starte den på nytt med:</p>
+            <pre><code>sudo systemctl start nginx</code></pre>
+
+            <h3>Konfigurere og Lage Nettsiden</h3>
+            <p>Nå skal vi opprette en mappe for nettsiden, konfigurere Nginx, og gjøre siden klar for å vise innhold.
+            </p>
+
+            <h4>Opprett en katalog for nettsiden</h4>
+            <p>Opprett en katalog der nettsiden din skal ligge. Bytt ut <code>brukernavn</code> med ditt faktiske
+                brukernavn eller domenenavn:</p>
+            <pre><code>sudo mkdir -p /var/www/brukernavn.ikt-fag.no</code></pre>
+
+            <h4>Sett eierskap</h4>
+            <p>Endre eierskap på katalogen slik at du (den innloggede brukeren) kan administrere den direkte:</p>
+            <pre><code>sudo chown -R $USER:$USER /var/www/brukernavn.ikt-fag.no</code></pre>
+
+            <h4>Opprett Nginx-konfigurasjon</h4>
+            <p>Nå må vi lage en Nginx-konfigurasjonsfil for nettsiden. Åpne en ny konfigurasjonsfil i
+                <code>sites-available</code>:</p>
+            <pre><code>sudo nano /etc/nginx/sites-available/brukernavn.ikt-fag.no</code></pre>
+            <p>Lim inn følgende konfigurasjon. Erstatt <code>brukernavn.ikt-fag.no</code> eller IP-adressen med din
+                faktiske URL/IP:</p>
+            <pre><code>server {
+            listen 80;
+            server_name brukernavn.ikt-fag.no;
+            root /var/www/brukernavn.ikt-fag.no;
+            index index.html;
+        }
+        </code></pre>
+            <p>Lagre og lukk filen (<code>Ctrl+O</code>, <code>Enter</code>, <code>Ctrl+X</code>).</p>
+
+            <h4>Aktiver nettsiden</h4>
+            <p>Lag en symbolsk lenke til <code>sites-enabled</code> for å aktivere konfigurasjonen:</p>
+            <pre><code>sudo ln -s /etc/nginx/sites-available/brukernavn.ikt-fag.no /etc/nginx/sites-enabled/</code></pre>
+            <p>Du kan også fjerne den opprinnelige default-konfigurasjonen om ønskelig:</p>
+            <pre><code>sudo rm /etc/nginx/sites-enabled/default</code></pre>
+
+            <h3>Deploy Nettsiden fra Git</h3>
+            <p>Nå er det tid for å hente inn nettsiden din fra et Git-repository (f.eks. GitHub).</p>
+
+            <h4>Naviger til nettsidens katalog</h4>
+            <pre><code>cd /var/www/brukernavn.ikt-fag.no</code></pre>
+
+            <h4>Klon prosjektet</h4>
+            <p>Klon prosjektet ditt fra GitHub (bytt ut <code>&lt;URL-til-prosjektet&gt;</code> med den faktiske URL-en
+                til ditt repository):</p>
+            <pre><code>git clone &lt;URL-til-prosjektet&gt;</code></pre>
+
+            <h4>Kontroller innholdet</h4>
+            <p>Sjekk at prosjektmappen er klonet ved å kjøre:</p>
+            <pre><code>ls</code></pre>
+            <p>Hvis innholdet ligger i en undermappe, flytt filene ut i rotkatalogen til nettsiden:</p>
+            <pre><code>mv /var/www/brukernavn.ikt-fag.no/mappenavnet/{,} /var/www/brukernavn.ikt-fag.no/</code></pre>
+            <p>Slett deretter den tomme mappen:</p>
+            <pre><code>rmdir /var/www/brukernavn.ikt-fag.no/mappenavnet</code></pre>
+
+            <h3>Last inn Nginx på nytt</h3>
+            <p>For at endringene i konfigurasjonen skal tre i kraft, må du laste inn Nginx på nytt:</p>
+            <pre><code>sudo systemctl reload nginx</code></pre>
+
+            <h3>Feilsøking</h3>
+            <ul>
+                <li>Sjekk status på Nginx om du mistenker problemer:
+                    <pre><code>sudo systemctl status nginx.service</code></pre>
+                </li>
+                <li>Test konfigurasjonen for feil:
+                    <pre><code>sudo nginx -t</code></pre>
+                </li>
+            </ul>
+            <p>Hvis du får meldinger om feil, rett dem opp i konfigurasjonsfilene og test på nytt.</p>
+
+            <aside>
+                <p><strong>Når disse stegene er fullført, har du:</strong></p>
+                <ul>
+                    <li>Installert og konfigurert Nginx på Ubuntu-serveren.</li>
+                    <li>Opprettet og konfigurert en websidekatalog for ditt domene.</li>
+                    <li>Klonet inn prosjektet ditt fra Git.</li>
+                    <li>Lastet inn Nginx på nytt, slik at nettsiden nå er tilgjengelig.</li>
+                </ul>
+                <p>I neste del av guiden vil du kunne se nettsiden din ved å navigere til
+                    <code>http://brukernavn.ikt-fag.no</code> (eller din IP-adresse) i en nettleser. Du kan nå fortsette
+                    med eventuelle justeringer, ytterligere konfigurasjon av webserveren, eller implementere nye
+                    funksjoner på nettsiden.</p>
+            </aside>
+            <h2>Del 4: Testing, Universell Utforming, Responsivt Design og Videre Prosjektstyring</h2>
+            <p><em>I denne siste delen av guiden vil vi fokusere på å kvalitetssikre den oppsatte websiden. Vi vil også
+                    se på universell utforming, responsivt design og hvordan du kan bruke GitHub Projects til
+                    prosjektstyring. Til slutt skal vi se på hvordan du kan forberede deg til en eventuell muntlig
+                    gjennomgang av arbeidet.</em></p>
+
+            <h3>Testing og Universell Utforming</h3>
+            <p>Når nettsiden din er oppe og går, er det viktig å teste at den fungerer som forventet. Åpne nettleseren
+                og naviger til <code>http://brukernavn.ikt-fag.no</code> (erstatt <code>brukernavn</code> med ditt
+                faktiske domenenavn) og kontroller at:</p>
+            <ul>
+                <li><strong>Innhold lastes riktig:</strong> Sjekk at tekst, bilder og lenker fungerer som de skal.</li>
+                <li><strong>Universell utforming (UU):</strong>
+                    <ul>
+                        <li>Test tastaturnavigasjon (bruk <code>Tab</code>-tasten).</li>
+                        <li>Sjekk kontrast og lesbarhet, og at <code>alt</code>-tekst er på plass for bilder.</li>
+                        <li>Test tilgjengelighet med verktøy som <a href="https://wave.webaim.org/" target="_blank"
+                                rel="noopener">WAVE</a> eller Lighthouse.</li>
+                    </ul>
+                </li>
+                <li><strong>Responsivt design:</strong> Åpne siden på ulike enheter og skjermstørrelser for å sikre at
+                    layouten skaleres fornuftig.</li>
+                <li><strong>Ytelse og sikkerhet:</strong> Vurder å teste siden med Lighthouse eller GTmetrix. Planlegg
+                    HTTPS for sikker trafikk (Let’s Encrypt).</li>
+            </ul>
+
+            <h3>Bruk av GitHub Projects for Prosjektstyring</h3>
+            <p>For å organisere oppgaver, feilrettinger og nye funksjoner er det lurt å bruke GitHub Projects (eller
+                lignende verktøy). Her kan du:</p>
+            <ul>
+                <li><strong>Opprette oppgavekort (issues):</strong> F.eks. "Forbedre UU", "Legge til kontaktformular",
+                    "Implementere HTTPS".</li>
+                <li><strong>Sette milepæler:</strong> Definer mål for når visse funksjoner skal være ferdige.</li>
+                <li><strong>Visuell oppgaveflyt:</strong> Dra kort mellom "To do", "In progress" og "Done" for å se
+                    fremdrift.</li>
+            </ul>
+
+            <h3>Vedlikehold og Videre Utvikling</h3>
+            <p>Nettsiden krever løpende vedlikehold:</p>
+            <ul>
+                <li><strong>Systemoppdateringer:</strong> Kjør jevnlig:
+                    <pre><code>sudo apt update && sudo apt upgrade -y</code></pre>
+                </li>
+                <li><strong>Sikkerhet:</strong> Sikre serveren med sterke passord eller SSH-nøkler, og hold Nginx og
+                    Ubuntu oppdatert.</li>
+                <li><strong>Backup:</strong> Sett opp rutiner for jevnlige sikkerhetskopier av nettsidefiler og
+                    eventuelle databaser.</li>
+                <li><strong>Testing av nye funksjoner:</strong> Bruk testmiljøer eller feature-branches i Git for nye
+                    funksjoner før produksjonssetting.</li>
+            </ul>
+
+            <h3>Forberedelse til Muntlig Gjennomgang</h3>
+            <p>Når du skal presentere hva du har gjort, reflekter over:</p>
+            <ul>
+                <li><strong>Valg av teknologi:</strong> Hvorfor Ubuntu, hvorfor Nginx, hvorfor GitHub Projects?</li>
+                <li><strong>Universell utforming og responsivt design:</strong> Hvorfor er dette viktig?</li>
+                <li><strong>Sikkerhet og vedlikehold:</strong> Hva er strategien for oppdatering, backup og sikring?
+                </li>
+                <li><strong>Fremtidig utvidelse:</strong> Hvordan kan løsningen utvikles videre med nye funksjoner og
+                    integrasjoner?</li> 
+            </ul>
+
+            <aside>
+                <p><strong>Med dette er guiden komplett.</strong></p>
+                <p>Du har nå en fullstendig arbeidsflyt: Oppretting av VM i vCenter, installasjon av Ubuntu og Nginx,
+                    oppsett av nettside med Git-innhold, testing, universell utforming, responsivt design, samt
+                    kontinuerlig prosjektstyring. Du er nå godt rustet til å vedlikeholde, forbedre og presentere
+                    løsningen din.</p>
+            </aside>
+        </article>
+    </main>
+    <footer></footer>
+</body>
+
+</html>
